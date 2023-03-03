@@ -1,0 +1,12 @@
+[submodule "cores/Riotee/arduino_api"]
+	path = cores/Riotee/arduino_api
+	url = https://github.com/arduino/ArduinoCore-API
+[submodule "cores/Riotee/Riotee_Runtime"]
+	path = cores/Riotee/Riotee_Runtime
+	url = git@github.com:NessieCircuits/Riotee_Runtime.git
+[submodule "external/Riotee_Runtime"]
+	path = external/Riotee_Runtime
+	url = git@github.com:NessieCircuits/Riotee_Runtime.git
+[submodule "external/ArduinoCore-API"]
+	path = external/ArduinoCore-API
+	url = https://github.com/arduino/ArduinoCore-API

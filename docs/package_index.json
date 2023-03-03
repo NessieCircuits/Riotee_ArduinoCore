@@ -1,0 +1,46 @@
+{
+  "packages": [
+    {
+      "name": "riotee",
+      "maintainer": "Nessie Circuits",
+      "websiteURL": "https://github.com/NessieCircuits/Riotee_ArduinoCore",
+      "email": "info@nessie-circuits.de",
+      "help": {
+        "online": "https://github.com/NessieCircuits/Riotee_ArduinoCore/issues"
+      },
+      "platforms": [
+        {
+          "name": "Riotee Boards",
+          "architecture": "nrf52",
+          "version": "0.0.1",
+          "category": "Contributed",
+          "help": {
+            "online": "https://github.com/NessieCircuits/Riotee_ArduinoCore/issues"
+          },
+          "url": "https://github.com/NessieCircuits/Riotee_ArduinoCore/archive/refs/tags/0.0.1.zip",
+          "archiveFileName": "Riotee_ArduinoCore-0.0.1.tar.gz",
+          "checksum": "MD5:f62f439df6aae46e62118b8e433fd739",
+          "size": "1699986",
+          "boards": [
+            {
+              "name": "Riotee Board"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.11.0-arduino2"
+            }
+          ]
+        }
+      ],
+      "tools": []
+    }
+  ]
+}
