@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  compile:
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - RioteeBoard
+    runs-on: ubuntu-latest
+    name: Compile ${{ matrix.variant }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Create blinky sketch to compile
+        run: |
+          mkdir blinky
+          cat > blinky/blinky.ino << EOF
+            void setup() {
+              pinMode(LED_BUILTIN, OUTPUT);
+            }
+
+            void loop() {
+              digitalWrite(LED_BUILTIN, HIGH);
+              delay(1000);
+              digitalWrite(LED_BUILTIN, LOW);
+              delay(1000);
+            }
+          EOF
+      - name: Populate core from external sources
+        run: ./build_tree.sh
+      - uses: arduino/compile-sketches@v1
+        with:
+          cli-version: latest
+          verbose: true
+          platforms: |
+            # Cross-usage of dependencies is not supported so we install a dummy package
+            - name: "arduino:mbed_nano"
+            # Now, we install our core from source
+            - name: "riotee:riotee"
+              source-path: .
+          fqbn: "riotee:riotee:${{ matrix.variant }}"
+          sketch-paths: blinky
