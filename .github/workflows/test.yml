@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: '*'
 
 jobs:
-  compile:
+  test:
     strategy:
       fail-fast: false
       matrix:
@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+
       - name: Create blinky sketch to compile
         run: |
           mkdir blinky
@@ -34,8 +35,10 @@ jobs:
               delay(1000);
             }
           EOF
+
       - name: Populate core from external sources
         run: ./build_tree.sh
+
       - uses: arduino/compile-sketches@v1
         with:
           cli-version: latest
@@ -48,3 +51,4 @@ jobs:
               source-path: .
           fqbn: "riotee:riotee:${{ matrix.variant }}"
           sketch-paths: blinky
+      

@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - RioteeBoard
+    runs-on: ubuntu-latest
+    name: Compile ${{ matrix.variant }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Create blinky sketch to compile
+        run: |
+          mkdir blinky
+          cat > blinky/blinky.ino << EOF
+            void setup() {
+              pinMode(LED_BUILTIN, OUTPUT);
+            }
+
+            void loop() {
+              digitalWrite(LED_BUILTIN, HIGH);
+              delay(1000);
+              digitalWrite(LED_BUILTIN, LOW);
+              delay(1000);
+            }
+          EOF
+
+      - name: Populate core from external sources
+        run: ./build_tree.sh
+
+      - uses: arduino/compile-sketches@v1
+        with:
+          cli-version: latest
+          verbose: true
+          platforms: |
+            # Cross-usage of dependencies is not supported so we install a dummy package
+            - name: "arduino:mbed_nano"
+            # Now, we install our core from source
+            - name: "riotee:riotee"
+              source-path: .
+          fqbn: "riotee:riotee:${{ matrix.variant }}"
+          sketch-paths: blinky
+  
+      - name: Create directories for release
+        run: mkdir core_release output
+      
+      - name: Copy files into release dir
+        run: cp -r cores/ variants/ boards.txt platform.txt programmers.txt core_release/
+
+      - name: Store release tag in environment variable
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Zip the core_release
+        run: zip -qq -r output/Riotee_ArduinoCore_${RELEASE_VERSION}.zip core_release
+
+      - name: Upload artifacts to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: output
+          path: output
+
+      - name: Upload artifacts to webserver
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: www.riotee.nessie-circuits.de
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: output/
+          server-dir: /htdocs/riotee/artifacts/arduino/release/
+          protocol: ftps
