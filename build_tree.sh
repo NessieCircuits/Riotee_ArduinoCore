@@ -1,51 +1,44 @@
 #!/bin/bash
 
-# Clean directory
-rm -rf cores/Riotee/external
+# Copy all required files from git submodules into core tree. This keeps the
+# core size small and prevents Arduino from trying to compile everything.
 
-# Copy external code into core directory
-cp -r external/ cores/Riotee/external/
-
-# We want to keep these files
-keepers=( \
-cores/Riotee/external/Riotee_Runtime/freertos/list.c \
-cores/Riotee/external/Riotee_Runtime/freertos/queue.c \
-cores/Riotee/external/Riotee_Runtime/freertos/tasks.c \
-cores/Riotee/external/Riotee_Runtime/freertos/timers.c \
-cores/Riotee/external/Riotee_Runtime/freertos/portable/GCC/ARM_CM4F/port.c \
+copy_paths=(
+    ArduinoCore-API/api
+    Riotee_Runtime/CMSIS_5/CMSIS/Core/Include
+    Riotee_Runtime/nrfx/nrfx.h
+    Riotee_Runtime/nrfx/hal
+    Riotee_Runtime/nrfx/soc
+    Riotee_Runtime/nrfx/templates
+    Riotee_Runtime/nrfx/drivers/include
+    Riotee_Runtime/nrfx/drivers/nrfx_common.h
+    Riotee_Runtime/nrfx/drivers/nrfx_errors.h
+    Riotee_Runtime/nrfx/mdk/nrf.h
+    Riotee_Runtime/nrfx/mdk/nrf52833.h
+    Riotee_Runtime/nrfx/mdk/system_nrf52833.h
+    Riotee_Runtime/nrfx/mdk/nrf52833_bitfields.h
+    Riotee_Runtime/nrfx/mdk/nrf52_to_nrf52833.h
+    Riotee_Runtime/nrfx/mdk/nrf51_to_nrf52.h
+    Riotee_Runtime/nrfx/mdk/nrf_peripherals.h
+    Riotee_Runtime/nrfx/mdk/nrf52833_peripherals.h
+    Riotee_Runtime/nrfx/mdk/compiler_abstraction.h
+    Riotee_Runtime/freertos/list.c
+    Riotee_Runtime/freertos/queue.c
+    Riotee_Runtime/freertos/tasks.c
+    Riotee_Runtime/freertos/event_groups.c
+    Riotee_Runtime/freertos/portable/GCC/ARM_CM4F
+    Riotee_Runtime/freertos/include
+    Riotee_Runtime/src
+    Riotee_Runtime/include
+    Riotee_Runtime/linker.ld
 )
 
-# We want to delete these files
-targets=( \
-cores/Riotee/external/Riotee_Runtime/src/main.c \
-)
-
-# Find all 'external' C source files in the runtime lib
-readarray -d '' candidates < <(find cores/Riotee/external/Riotee_Runtime/freertos cores/Riotee/external/Riotee_Runtime/nrfx cores/Riotee/external/Riotee_Runtime/CMSIS_5 cores/Riotee/external/ArduinoCore-API/test -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.S" -o -name "*.asm" \) -print0)
-
-
-# Build difference between candidates and keepers
-declare -A temp
-for element in "${candidates[@]}" "${keepers[@]}"
+# Copy files, creating paths as necessary
+for item in "${copy_paths[@]}"
 do
-    ((temp[$element]++))
-done
-for element in "${!temp[@]}"
-do
-    if (( ${temp[$element]} > 1 ))
-    then
-        unset "temp[$element]"
-    fi
-done
-
-# These are the files that we want to delete
-targets+=(${!temp[@]})
-
-echo "found ${#candidates[@]}"
-echo "excluding ${#keepers[@]} files"
-echo "deleting ${#targets[@]} files"
-
-for item in "${targets[@]}"
-do
-	rm -f "$item"
+	src_path="external/${item}"
+	dst_path="cores/Riotee/external/${item}"
+    dst_dir="$(dirname -- $dst_path)"
+    mkdir -p $dst_dir
+    cp -r $src_path $dst_path
 done
