@@ -1,7 +1,7 @@
 # Riotee Arduino Core
 
 
-[![Build](https://github.com/NessieCircuits/Riotee_ArduinoCore/actions/workflows/compile.yml/badge.svg)](https://github.com/NessieCircuits/Riotee_ArduinoCore/actions/workflows/compile.yml)
+[![Tests](https://github.com/NessieCircuits/Riotee_ArduinoCore/actions/workflows/test.yml/badge.svg)](https://github.com/NessieCircuits/Riotee_ArduinoCore/actions/workflows/test.yml)
 
 This repository hosts the runtime and Arduino bindings for the battery-free Riotee devices. After installation you can program the Riotee module or Riotee board conveniently from the Arduino IDE via a Riotee probe (already built into the Riotee board).
 
