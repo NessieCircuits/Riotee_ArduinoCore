@@ -9,7 +9,7 @@ This repository hosts the runtime and Arduino bindings for the battery-free Riot
 
 Open the Arduino IDE and navigate to `File->Preferences`.
 Open the list of board managers by clicking on the icon next to the input field for *Additional boards manager URLs*.
-Add `https://nessiecircuits.github.io/Riotee_ArduinoCore/package_index.json` as one new row to the list of board manager URLs.
+Add `https://riotee.nessie-circuits.de/arduino/package_index.json` as one new row to the list of board manager URLs.
 Confirm the changes by clicking OK.
 
 # Usage

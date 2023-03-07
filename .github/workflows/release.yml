@@ -90,5 +90,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: output/
-          server-dir: /htdocs/riotee/artifacts/arduino/release/
+          server-dir: /htdocs/riotee/arduino/release/
           protocol: ftps
