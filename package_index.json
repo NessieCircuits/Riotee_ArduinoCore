@@ -35,12 +35,53 @@
             {
               "packager": "arduino",
               "name": "openocd",
-              "version": "0.11.0-arduino2"
+              "version": "0.12.0-rc3"
             }
           ]
         }
       ],
-      "tools": []
+      "tools": [
+        {
+          "name": "gcc-arm-none-eabi",
+          "version": "12.2.0",
+          "systems": [
+            {
+              "host": "i686-linux-gnu",
+              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "archiveFileName": "arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "size": "295930317",
+              "checksum": "MD5:8788fb032172378007cdd11df84797fb"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "archiveFileName": "arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "size": "295930317",
+              "checksum": "MD5:8788fb032172378007cdd11df84797fb"
+            }
+          ]
+        },
+        {
+          "name": "openocd",
+          "version": "0.12.0-rc3",
+          "systems": [
+            {
+              "host": "i686-linux-gnu",
+              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
+              "archiveFileName": "openocd-linux32-0.12.0-rc3.tar.gz",
+              "size": "7810733",
+              "checksum": "MD5:6abbe10d353da7b07a31465b2d291356"
+            },
+            {
+              "host": "x86_64-pc-linux-gnu",
+              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
+              "archiveFileName": "openocd-linux32-0.12.0-rc3.tar.gz",
+              "size": "7810733",
+              "checksum": "MD5:6abbe10d353da7b07a31465b2d291356"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
