@@ -11,16 +11,16 @@
       "platforms": [
         {
           "name": "Riotee Boards",
-          "architecture": "nrf52",
+          "architecture": "riotee",
           "version": "0.0.1",
           "category": "Contributed",
           "help": {
             "online": "https://github.com/NessieCircuits/Riotee_ArduinoCore/issues"
           },
-          "url": "https://github.com/NessieCircuits/Riotee_ArduinoCore/archive/refs/tags/0.0.1.zip",
+          "url": "https://riotee.nessie-circuits.de/artifacts/arduino/release/Riotee_ArduinoCore_0.0.1.zip",
           "archiveFileName": "Riotee_ArduinoCore-0.0.1.tar.gz",
-          "checksum": "MD5:f62f439df6aae46e62118b8e433fd739",
-          "size": "1699986",
+          "checksum": "MD5:8be42b62d559b7720ca059448ca41011",
+          "size": "2469174",
           "boards": [
             {
               "name": "Riotee Board"
@@ -28,12 +28,12 @@
           ],
           "toolsDependencies": [
             {
-              "packager": "arduino",
-              "name": "arm-none-eabi-gcc",
-              "version": "7-2017q4"
+              "packager": "riotee",
+              "name": "gcc-arm-none-eabi",
+              "version": "12.2.0"
             },
             {
-              "packager": "arduino",
+              "packager": "riotee",
               "name": "openocd",
               "version": "0.12.0-rc3"
             }
@@ -47,14 +47,14 @@
           "systems": [
             {
               "host": "i686-linux-gnu",
-              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "url": "https://riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
               "archiveFileName": "arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
               "size": "295930317",
               "checksum": "MD5:8788fb032172378007cdd11df84797fb"
             },
             {
               "host": "x86_64-pc-linux-gnu",
-              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
+              "url": "https://riotee.nessie-circuits.de/artifacts/arduino/tools/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
               "archiveFileName": "arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.gz",
               "size": "295930317",
               "checksum": "MD5:8788fb032172378007cdd11df84797fb"
@@ -67,14 +67,14 @@
           "systems": [
             {
               "host": "i686-linux-gnu",
-              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
+              "url": "https://riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
               "archiveFileName": "openocd-linux32-0.12.0-rc3.tar.gz",
               "size": "7810733",
               "checksum": "MD5:6abbe10d353da7b07a31465b2d291356"
             },
             {
               "host": "x86_64-pc-linux-gnu",
-              "url": "https://www.riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
+              "url": "https://riotee.nessie-circuits.de/artifacts/arduino/tools/openocd-linux32-0.12.0-rc3.tar.gz",
               "archiveFileName": "openocd-linux32-0.12.0-rc3.tar.gz",
               "size": "7810733",
               "checksum": "MD5:6abbe10d353da7b07a31465b2d291356"
