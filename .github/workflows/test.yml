@@ -44,9 +44,11 @@ jobs:
           cli-version: latest
           verbose: true
           platforms: |
-            # Cross-usage of dependencies is not supported so we install a dummy package
-            - name: "arduino:mbed_nano"
-            # Now, we install our core from source
+            # Install previous version from package index to get the tools
+            - name: "riotee:riotee"
+              source-url: "file://${{ github.workspace }}/package_index.json"
+              version: latest
+            # Install current core from source
             - name: "riotee:riotee"
               source-path: .
           fqbn: "riotee:riotee:${{ matrix.variant }}"
