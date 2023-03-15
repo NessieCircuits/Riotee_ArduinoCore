@@ -7,10 +7,12 @@ This repository hosts the runtime and Arduino bindings for the battery-free Riot
 
 # Installation
 
-Open the Arduino IDE and navigate to `File->Preferences`.
-Open the list of board managers by clicking on the icon next to the input field for *Additional boards manager URLs*.
-Add `https://riotee.nessie-circuits.de/arduino/package_index.json` as one new row to the list of board manager URLs.
-Confirm the changes by clicking OK.
+ - Open the board manager in the Arduino IDE by clicking on the second symbol from the top on the side panel.
+ - Navigate to `File->Preferences` in the menu bar.
+ - Open the list of board managers by clicking on the icon next to the input field for *Additional boards manager URLs*.
+ - Add `https://riotee.nessie-circuits.de/arduino/package_index.json` as one new row to the list of board manager URLs.
+ - Confirm the changes by clicking OK.
+ - Look for "Riotee Boards by Nessie Circuits" in the board manager side panel and click Install.
 
 # Usage
 
