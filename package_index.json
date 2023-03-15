@@ -19,8 +19,8 @@
           },
           "url": "https://riotee.nessie-circuits.de/arduino/release/Riotee_ArduinoCore_0.0.1.zip",
           "archiveFileName": "Riotee_ArduinoCore-0.0.1.tar.gz",
-          "checksum": "MD5:8be42b62d559b7720ca059448ca41011",
-          "size": "2469174",
+          "checksum": "MD5:bbaa938a2cd021007bd115111f1cd068",
+          "size": "32067716",
           "boards": [
             {
               "name": "Riotee Board"

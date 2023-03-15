@@ -33,6 +33,9 @@ copy_paths=(
     Riotee_Runtime/linker.ld
 )
 
+# Cleanup
+rm -rf cores/Riotee/external/*
+
 # Copy files, creating paths as necessary
 for item in "${copy_paths[@]}"
 do

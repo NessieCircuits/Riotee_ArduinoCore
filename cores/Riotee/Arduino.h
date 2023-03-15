@@ -3,6 +3,10 @@
 
 #include "timing.h"
 
+#ifdef __cplusplus
+#include "Serial.h"
+#endif
+
 #define LOW (0x0)
 #define HIGH (0x1)
 
