@@ -33,7 +33,7 @@ compiler.opt_flags = -O3 -g3
 compiler.path={runtime.tools.gcc-arm-none-eabi-12.2.0.path}/bin/
 compiler.c.cmd=arm-none-eabi-gcc
 compiler.c.flags=-mthumb -mcpu={build.mcu} -c {compiler.opt_flags} {compiler.warning_flags} {build.float_flags} -fno-math-errno -ffunction-sections -fdata-sections
-compiler.c.elf.cmd=arm-none-eabi-gcc
+compiler.c.elf.cmd=arm-none-eabi-g++
 compiler.c.elf.flags={compiler.opt_flags} -T{build.ldscript} -mcpu={build.mcu} -mthumb {build.float_flags} -L{riotee.runtime.path} -Wl,--gc-sections,-Map,{build.path}/{build.project_name}.map --specs=nano.specs
 
 compiler.S.cmd=arm-none-eabi-gcc
