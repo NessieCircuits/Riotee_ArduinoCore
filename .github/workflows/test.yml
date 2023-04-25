@@ -46,11 +46,10 @@ jobs:
           platforms: |
             # Install previous version from package index to get the tools
             - name: "riotee:riotee"
-              source-url: "file://${{ github.workspace }}/package_index.json"
+              source-url: "https://riotee.nessie-circuits.de/arduino/package_index.json"
               version: latest
             # Install current core from source
             - name: "riotee:riotee"
               source-path: .
           fqbn: "riotee:riotee:${{ matrix.variant }}"
           sketch-paths: blinky
-      
