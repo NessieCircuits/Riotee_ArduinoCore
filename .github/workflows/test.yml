@@ -13,12 +13,50 @@ jobs:
       matrix:
         variant:
           - RioteeBoard
+
     runs-on: ubuntu-latest
     name: Compile ${{ matrix.variant }}
     steps:
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install gettext-base
+
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+          path: Riotee_ArduinoCore
+
+      - name: Populate core from external sources
+        run: cd Riotee_ArduinoCore && ./build_tree.sh
+
+      - name: Create directory for server and core
+        run: mkdir server core
+
+      - name: Copy files into release dir
+        run: cp -r Riotee_ArduinoCore/cores/ Riotee_ArduinoCore/variants/ Riotee_ArduinoCore/libraries/ Riotee_ArduinoCore/boards.txt Riotee_ArduinoCore/platform.txt Riotee_ArduinoCore/programmers.txt core
+
+      - name: Zip the core
+        run: zip -qq -r server/Riotee_ArduinoCore.zip core
+  
+      - name: Compute checksum of release zip
+        run: echo "MD5SUM=$(md5sum server/Riotee_ArduinoCore.zip | head -n1 | awk '{print $1;}')" >> $GITHUB_ENV
+
+      - name: Compute filesize of release zip
+        run: echo "FILESIZE=$(wc -c server/Riotee_ArduinoCore.zip | head -n1 | awk '{print $1;}')" >> $GITHUB_ENV
+
+      - name: Render template of package_index json
+        run: envsubst < Riotee_ArduinoCore/package_index_cicd.tmpl > package_index.json
+
+      - name: Install Arduino CLI
+        run: sudo sh -c 'curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/bin sh'
+
+      - name: Serve Files
+        uses: Eun/http-server-action@v1
+        with:
+          directory: ${{ github.workspace }}/server
+          port: 8000
+
+      - name: Install core
+        run: arduino-cli core install riotee:riotee --additional-urls file:///${{ github.workspace }}/package_index.json --log-level debug --verbose
 
       - name: Create blinky sketch to compile
         run: |
@@ -36,20 +74,5 @@ jobs:
             }
           EOF
 
-      - name: Populate core from external sources
-        run: ./build_tree.sh
-
-      - uses: arduino/compile-sketches@v1
-        with:
-          cli-version: latest
-          verbose: true
-          platforms: |
-            # Install previous version from package index to get the tools
-            - name: "riotee:riotee"
-              source-url: "https://riotee.nessie-circuits.de/arduino/package_index.json"
-              version: latest
-            # Install current core from source
-            - name: "riotee:riotee"
-              source-path: .
-          fqbn: "riotee:riotee:${{ matrix.variant }}"
-          sketch-paths: blinky
+      - name: Compile blinky sketch
+        run: arduino-cli compile -b riotee:riotee:RioteeBoard blinky --log-level debug --verbose
