@@ -8,14 +8,11 @@ on:
 
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        variant:
-          - RioteeBoard
-
     runs-on: ubuntu-latest
-    name: Compile ${{ matrix.variant }}
+    name: Test sketch compilation
+    outputs:
+      md5sum: ${{ steps.md5sum.outputs.test }}
+      filesize: ${{ steps.filesize.outputs.test }}
     steps:
       - name: Install dependencies
         run: sudo apt update && sudo apt install gettext-base
@@ -36,12 +33,20 @@ jobs:
 
       - name: Zip the core
         run: zip -qq -r server/Riotee_ArduinoCore.zip core
-  
+
       - name: Compute checksum of release zip
         run: echo "MD5SUM=$(md5sum server/Riotee_ArduinoCore.zip | head -n1 | awk '{print $1;}')" >> $GITHUB_ENV
 
       - name: Compute filesize of release zip
         run: echo "FILESIZE=$(wc -c server/Riotee_ArduinoCore.zip | head -n1 | awk '{print $1;}')" >> $GITHUB_ENV
+
+      - name: Store md5 sum as output for release job
+        id: md5sum
+        run: echo "md5sum=$MD5SUM" >> $GITHUB_OUTPUT
+
+      - name: Store filesize as output for release job
+        id: filesize
+        run: echo "filesize=$FILESIZE" >> $GITHUB_OUTPUT
 
       - name: Render template of package_index json
         run: envsubst < Riotee_ArduinoCore/package_index_cicd.tmpl > package_index.json
@@ -76,3 +81,50 @@ jobs:
 
       - name: Compile blinky sketch
         run: arduino-cli compile -b riotee:riotee:RioteeBoard blinky --log-level debug --verbose
+
+      - name: Upload artifact to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: core_zip
+          path: server/Riotee_ArduinoCore.zip
+
+  release:
+    if: github.event_name == 'release' && github.event.action == 'created'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install gettext-base
+
+      - uses: actions/checkout@v3
+
+      - run: echo ${{needs.test.outputs.md5sum}} >> $GITHUB_ENV
+      - run: echo ${{needs.test.outputs.filesize}} >> $GITHUB_ENV
+
+      - name: Store release tag in environment variable
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Render template of package_index json
+        run: envsubst < package_index_snippet.tmpl > package_index_snippet.json
+
+      - name: Upload snippet as artifact to github
+        uses: actions/upload-artifact@v3
+        with:
+          name: package_index_snippet
+          path: package_index_snippet.json
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: core_zip
+      - run: mkdir output
+      - run: cp Riotee_ArduinoCore.zip output/Riotee_ArduinoCore_${RELEASE_VERSION}.zip
+
+      - name: Upload artifacts to webserver
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: www.riotee.nessie-circuits.de
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: output/
+          server-dir: /htdocs/riotee/arduino/release/
+          protocol: ftps
