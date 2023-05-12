@@ -15,7 +15,7 @@ jobs:
     name: Test sketch compilation
     needs: call-build
     steps:
-      - name: Install dependencies
+      - name: Install dependencies of envsubst
         run: sudo apt update && sudo apt install gettext-base
 
       - uses: actions/checkout@v3

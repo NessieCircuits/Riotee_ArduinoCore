@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Test sketch compilation
+    name: Build core package
     steps:
       - uses: actions/checkout@v3
         with:
