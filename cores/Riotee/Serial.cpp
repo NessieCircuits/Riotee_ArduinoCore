@@ -49,7 +49,6 @@ void SerialClass::begin(unsigned long baudrate) {
 }
 
 size_t SerialClass::write(const uint8_t *buffer, size_t size) {
-  size_t n = 0;
   for (unsigned int i = 0; i < size; i++)
     _putchar(*buffer++);
   return size;

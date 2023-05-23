@@ -55,8 +55,7 @@ compiler.define=-DARDUINO=
 build.extra_flags=
 
 riotee.runtime.path={build.core.path}/external/Riotee_Runtime
-riotee.arduino_api.path={build.core.path}/external/ArduinoCore-API/api
-compiler.riotee.includes = "-I{riotee.runtime.path}/include" "-I{riotee.runtime.path}/freertos/include" "-I{riotee.runtime.path}/freertos/portable/GCC/ARM_CM4F" "-I{riotee.runtime.path}/nrfx" "-I{riotee.runtime.path}/nrfx/hal" "-I{riotee.runtime.path}/nrfx/mdk" "-I{riotee.runtime.path}/nrfx/templates" "-I{riotee.runtime.path}/CMSIS_5/CMSIS/Core/Include" "-I{riotee.arduino_api.path}"
+compiler.riotee.includes = "-I{riotee.runtime.path}/include" "-I{riotee.runtime.path}/freertos/include" "-I{riotee.runtime.path}/freertos/portable/GCC/ARM_CM4F" "-I{riotee.runtime.path}/nrfx" "-I{riotee.runtime.path}/nrfx/hal" "-I{riotee.runtime.path}/nrfx/mdk" "-I{riotee.runtime.path}/nrfx/templates" "-I{riotee.runtime.path}/CMSIS_5/CMSIS/Core/Include"
 
 # These can be overridden in platform.local.txt
 compiler.c.extra_flags=
