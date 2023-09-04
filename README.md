@@ -1,3 +1,5 @@
+This repository has been archived. The Riotee Arduino core is now part of the [Riotee SDK](https://github.com/NessieCircuits/Riotee_SDK).
+
 # Riotee Arduino Core
 
 
